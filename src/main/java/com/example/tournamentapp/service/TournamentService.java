@@ -1,9 +1,9 @@
 package com.example.tournamentapp.service;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +13,8 @@ import com.example.tournamentapp.dao.PlayerMatchRepo;
 import com.example.tournamentapp.dao.PlayerRepo;
 import com.example.tournamentapp.dto.MatchDTO;
 import com.example.tournamentapp.dto.PlayerDTO;
-import com.example.tournamentapp.model.Match;
 import com.example.tournamentapp.model.Player;
-import com.example.tournamentapp.model.PlayerMatch;
+
 
 @Service
 public class TournamentService {
@@ -25,14 +24,15 @@ public class TournamentService {
 	PlayerMatchRepo playermatchrepo;
 	@Autowired
 	MatchRepo matchrepo;
-
 	@Autowired
 	ConverterService converterservice;
+	
+	private static Logger logger=LoggerFactory.getLogger(TournamentService.class);
 
 	public PlayerDTO getPlayers(Integer playerid) {
 		PlayerDTO playerDTO=null;
 		Player player = playerrepo.findById(playerid).orElse(null);
-		
+		logger.debug("Player data {}",player);
 		if (player==null)
 		{
 			throw new PlayerNotFoundException("id "+ playerid+" is not correct!!Please enter valid id");
@@ -40,8 +40,15 @@ public class TournamentService {
 		else if (player!=null)
 		{
 		playerDTO = converterservice.convert(player);
-		playerDTO.setTotal(playermatchrepo.sumscore(playerDTO.getId()));
+		logger.info("PlayerDTO created");
+		Integer total=playermatchrepo.sumscore(playerDTO.getId());
+		logger.debug("Total score {}",total);
+		if(total!=null)
+			playerDTO.setTotal(total);
+		else 
+			playerDTO.setTotal(0);	
 		List<Integer> matchidlist = playermatchrepo.matchids(playerDTO.getId());
+		logger.debug("Fetch macth list {}",matchidlist);
 		List<MatchDTO> matchdtolist = playerDTO.getMatch();
 		for (Integer mid : matchidlist) {
 			MatchDTO matchDTO= converterservice.convert(matchrepo.findById(mid).orElse(null));
@@ -52,32 +59,5 @@ public class TournamentService {
 			
 		return playerDTO;
 	}
-
-	
-	  public List<PlayerDTO> update(String name) {
-	  
-	  
-	  Player p=new Player(); p.setName(name); p.setCricketteam("Australia");
-	  
-	  Match m =new Match(); m.setLocation("India"); m.setSeriesname("ICC World Cup");
-	  PlayerMatch pm=new PlayerMatch(); pm.setMatch(m); pm.setPlayer(p);
-	  pm.setScore(100);
-	  
-	  
-	  p.setPlayermatch(Arrays.asList(pm)); m.setPlayermatch(Arrays.asList(pm));
-	  playermatchrepo.save(pm);
-	  
-	  List<Player> playerlist=playerrepo.findAll(); 
-	  List<PlayerDTO> matchlist=playerlist.stream().map(converterservice::convert).collect(
-	  Collectors.toList()); 
-	  /*for (PlayerDTO playerDTO : matchlist) {
-	  playerDTO.setTotal(playermatchrepo.sumscore(playerDTO.getId()));
-	  List<Integer> matchidlist=playermatchrepo.matchids(playerDTO.getId());
-	  List<MatchDTO> matchdtolist=playerDTO.getMatch(); for (Integer mid :
-	 matchidlist) {
-	  matchdtolist.add(converterservice.convert(matchrepo.getOne(mid))); } }*/ 
-	  return
-	  matchlist;}
-	 
 
 }
