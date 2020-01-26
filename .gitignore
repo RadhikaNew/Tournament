@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -5,10 +6,47 @@ target/
 !**/src/test/**
 
 ### STS ###
+=======
+# Copiled class file
+*.class
+#Log file
+.log
+#BlueJ files
+*.ctxt
+#Package Files#
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+.mvn/wrapper/maven-wrapper.jar
+
+.svn
+target
+.mvn
+transaction-logs
+bin/
+logs/
+
+###STS###
+>>>>>>> d49153ed9dd4df1684a06882ebd0e3d30ad59adc
 .apt_generated
 .classpath
 .factorypath
 .project
+<<<<<<< HEAD
 .settings
 .springBeans
 .sts4-cache
@@ -29,3 +67,7 @@ build/
 
 ### VS Code ###
 .vscode/
+=======
+.setting
+.springBeans
+>>>>>>> d49153ed9dd4df1684a06882ebd0e3d30ad59adc
