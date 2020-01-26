@@ -1,4 +1,4 @@
-package com.example.tournamentapp.Exceptions;
+package com.example.tournamentapp.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

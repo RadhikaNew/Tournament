@@ -7,12 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.tournamentapp.Exceptions.PlayerNotFoundException;
 import com.example.tournamentapp.dao.MatchRepo;
 import com.example.tournamentapp.dao.PlayerMatchRepo;
 import com.example.tournamentapp.dao.PlayerRepo;
 import com.example.tournamentapp.dto.MatchDTO;
 import com.example.tournamentapp.dto.PlayerDTO;
+import com.example.tournamentapp.exceptions.PlayerNotFoundException;
 import com.example.tournamentapp.model.Player;
 
 
