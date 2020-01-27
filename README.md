@@ -1,7 +1,7 @@
 # Tournament
 This is a SpringBoot application which helps to fetch details of a player.
 Requirement
-![](/Pictures/5.PNG)
+![](/Pictures/5.JPG)
 
 How to fetch details of a player
 Run the application and fire a url http://localhost:9090/player/getplayers/{id}
